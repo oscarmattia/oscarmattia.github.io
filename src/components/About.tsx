@@ -113,9 +113,15 @@ const About = () => {
             </h3>
             <div className="pl-4 border-l border-border">
               <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-              <p className="font-medium text-sm">B.S. Computer Science</p>
-              <p className="text-text-secondary text-sm">University of California</p>
-              <p className="text-text-tertiary text-xs font-mono mt-1">2014 — 2018</p>
+              <p className="font-medium text-sm">Post-Doc Electrical Engineering</p>
+              <p className="text-text-secondary text-sm">Stanford University, USA</p>
+              <p className="text-text-tertiary text-xs font-mono mt-1">2019 — 2020</p>
+            </div>
+            <div className="pl-4 border-l border-border">
+              <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
+              <p className="font-medium text-sm">PhD Engineering Sciences</p>
+              <p className="text-text-secondary text-sm">imec, Belgium</p>
+              <p className="text-text-tertiary text-xs font-mono mt-1">2014 — 2019</p>
             </div>
           </div>
         </div>
