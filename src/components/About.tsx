@@ -48,7 +48,7 @@ const About = () => {
     <section id="about" className="section-padding">
       <div className="container-narrow">
         <h2 className="text-2xl font-semibold mb-2">About</h2>
-        <p className="text-text-secondary mb-12">A bit about me and my journey.</p>
+        {/*<p className="text-text-secondary mb-12">A bit about me and my journey.</p>/*}
 
         <div className="grid md:grid-cols-3 gap-12">
           {/* Bio */}
