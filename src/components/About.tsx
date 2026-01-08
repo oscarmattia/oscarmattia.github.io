@@ -2,34 +2,45 @@ import { Briefcase, GraduationCap, MapPin, Mail } from "lucide-react";
 
 const experiences = [
   {
-    title: "Senior Software Engineer",
-    company: "Tech Company",
-    period: "2022 — Present",
-    description: "Leading frontend architecture and building scalable web applications.",
+    title: "Silicon Display Engineer",
+    company: "Meta",
+    period: "2025 — Present",
+    description: "LLM-driven architecture of silicon displays. Industry first ultra-fast pixel-level IR drop solver, running on Meta's production repo and cloud GPUs.",
   },
   {
-    title: "Software Engineer",
-    company: "Startup Inc",
-    period: "2020 — 2022",
-    description: "Full-stack development with React and Node.js.",
+    title: "SMTS",
+    company: "AMD",
+    period: "2024 - 2025",
+    description: "Next-Gen SerDes. DAC-based TX Tech Lead.",
   },
   {
-    title: "Junior Developer",
-    company: "Agency Co",
-    period: "2018 — 2020",
-    description: "Built responsive websites and web applications for clients.",
+    title: "Principal Analog IC Design Engineer",
+    company: "d-Matrix",
+    period: "2023 - 2024",
+    description: "D2D high-speed links. Clocking.",
+  },
+  {
+    title: "Senior Analog IC Design Engineer",
+    company: "Luminous Computing",
+    period: "2022 - 2023",
+    description: "Si-Photonics High-Speed Links. TIA-based RX Tech Lead, monolithic integration process.",
+  },
+  {
+    title: "AMS IC Design Engineer",
+    company: "Apple",
+    period: "2020 - 2022",
+    description: "Data converters for SoC on-chip measurements.",
   },
 ];
 
 const skills = [
-  "TypeScript",
-  "React",
-  "Node.js",
-  "Python",
-  "PostgreSQL",
-  "AWS",
-  "Docker",
-  "GraphQL",
+  "LLM-driven workflows",
+  "Python stack",
+  "Remote dev environments",
+  "Analog and mixed-signal architecture",
+  "High-speed links",
+  "Data Converters",
+  "Custom Silicon",
 ];
 
 const About = () => {
@@ -43,13 +54,12 @@ const About = () => {
           {/* Bio */}
           <div className="md:col-span-2 space-y-6">
             <p className="text-text-secondary leading-relaxed">
-              I'm a software engineer with a passion for creating elegant solutions to complex problems. 
-              With over 5 years of experience in web development, I specialize in building performant 
-              and accessible applications.
+              I like tackling industry relevant problems. I have 10+ years of experience spanning research,
+              startups and product at big tech. I learn fast and prefer to work independently.
             </p>
             <p className="text-text-secondary leading-relaxed">
-              When I'm not coding, you'll find me exploring the outdoors with my camera, reading about 
-              new technologies, or contributing to open-source projects.
+              When I'm not working, you'll find me exploring outside surfing, with my camera, reading about 
+              new technologies, and contributing to open-source projects.
             </p>
 
             {/* Quick Info */}
