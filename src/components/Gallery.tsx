@@ -1,47 +1,73 @@
-import { useState } from "react";
-import { X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Loader2, ExternalLink, Instagram } from "lucide-react";
 
-const photos = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    alt: "Mountain landscape at sunset",
-    location: "Swiss Alps",
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
-    alt: "Starry night over mountains",
-    location: "Iceland",
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80",
-    alt: "Misty forest",
-    location: "Pacific Northwest",
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&q=80",
-    alt: "Autumn forest path",
-    location: "Vermont",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&q=80",
-    alt: "Waterfall in tropical forest",
-    location: "Costa Rica",
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80",
-    alt: "Lake reflection at dawn",
-    location: "New Zealand",
-  },
-];
+interface Photo {
+  id: string;
+  src: string;
+  alt: string;
+  location?: string;
+  permalink?: string;
+}
 
 const Gallery = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState<typeof photos[0] | null>(null);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
+  useEffect(() => {
+    const fetchInstagramPhotos = async () => {
+      try {
+        setLoading(true);
+        // Using Instagram Basic Display API endpoint
+        // Note: This requires an access token. For production, set up Instagram Basic Display API
+        // and use environment variables for the access token
+        const accessToken = import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN;
+        
+        if (!accessToken) {
+          // If no token, try to use a public approach (may not work due to CORS/authentication)
+          // For now, we'll show a message to set up the API
+          setError("Instagram access token not configured. See setup instructions in code comments.");
+          setLoading(false);
+          return;
+        }
+
+        // Fetch media from Instagram Basic Display API
+        const response = await fetch(
+          `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${accessToken}&limit=12`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch Instagram photos");
+        }
+
+        const data = await response.json();
+        
+        // Filter for images only (exclude videos)
+        const imagePosts = data.data
+          ?.filter((item: any) => item.media_type === "IMAGE")
+          .slice(0, 12)
+          .map((item: any) => ({
+            id: item.id,
+            src: item.media_url,
+            alt: item.caption?.substring(0, 100) || "Instagram photo",
+            location: item.caption?.substring(0, 50) || undefined,
+            permalink: item.permalink,
+          })) || [];
+
+        setPhotos(imagePosts);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+        console.error("Error fetching Instagram photos:", err);
+        // On error, you could fall back to a static list of images
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInstagramPhotos();
+  }, []);
 
   return (
     <section id="gallery" className="section-padding">
@@ -49,26 +75,73 @@ const Gallery = () => {
         <h2 className="text-2xl font-semibold mb-2">Gallery</h2>
         <p className="text-text-secondary mb-12">Photography from my travels and adventures.</p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {photos.map((photo) => (
-            <button
-              key={photo.id}
-              onClick={() => setSelectedPhoto(photo)}
-              className="group relative aspect-square overflow-hidden rounded-lg bg-secondary"
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-6 h-6 text-accent animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-text-secondary mb-4">{error}</p>
+            <a
+              href="https://www.instagram.com/oscarmattia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-accent hover:underline underline-offset-4"
             >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p className="text-xs text-background font-medium">{photo.location}</p>
-              </div>
-            </button>
-          ))}
-        </div>
+              View on Instagram
+              <Instagram className="w-4 h-4" />
+            </a>
+          </div>
+        ) : photos.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+              {photos.map((photo) => (
+                <button
+                  key={photo.id}
+                  onClick={() => setSelectedPhoto(photo)}
+                  className="group relative aspect-square overflow-hidden rounded-lg bg-secondary"
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300" />
+                  {photo.location && (
+                    <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="text-xs text-background font-medium">{photo.location}</p>
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <a
+                href="https://www.instagram.com/oscarmattia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-accent hover:underline underline-offset-4"
+              >
+                View more on Instagram
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-text-secondary mb-4">No photos found</p>
+            <a
+              href="https://www.instagram.com/oscarmattia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-accent hover:underline underline-offset-4"
+            >
+              View on Instagram
+              <Instagram className="w-4 h-4" />
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Lightbox */}
@@ -91,8 +164,22 @@ const Gallery = () => {
             onClick={(e) => e.stopPropagation()}
           />
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-            <p className="text-background text-sm font-medium">{selectedPhoto.location}</p>
+            {selectedPhoto.location && (
+              <p className="text-background text-sm font-medium">{selectedPhoto.location}</p>
+            )}
             <p className="text-background/70 text-xs mt-1">{selectedPhoto.alt}</p>
+            {selectedPhoto.permalink && (
+              <a
+                href={selectedPhoto.permalink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-background/90 hover:text-background text-xs mt-2 underline underline-offset-2"
+                onClick={(e) => e.stopPropagation()}
+              >
+                View on Instagram
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
           </div>
         </div>
       )}
