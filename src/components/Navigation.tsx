@@ -17,7 +17,7 @@ const Navigation = () => {
       <div className="container-narrow">
         <div className="flex items-center justify-between h-16">
           <a href="#" className="font-semibold text-lg tracking-tight">
-            JD<span className="text-accent">.</span>
+            OM<span className="text-accent">.</span>
           </a>
 
           {/* Desktop Nav */}

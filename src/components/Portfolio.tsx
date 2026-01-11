@@ -1,36 +1,46 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Award } from "lucide-react";
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution with real-time inventory, payment processing, and admin dashboard.",
-    tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
-    liveUrl: "#",
-    githubUrl: "#",
+    title: "Inverter-Based Analog Design for High-Speed Communications",
+    description: "IEEE ESSCIRC 2023 Invited Tutorial on modern analog design techniques for high-speed communication systems.",
+    tags: ["IEEE ESSCIRC 2023", "Tutorial", "Analog Design"],
+    type: "publication",
     featured: true,
   },
   {
-    title: "Analytics Dashboard",
-    description: "Real-time analytics dashboard for tracking user behavior and business metrics.",
-    tags: ["TypeScript", "D3.js", "GraphQL"],
-    liveUrl: "#",
-    githubUrl: "#",
+    title: "A Compact 28 GS/s 8-bit Switched-Capacitor DAC in 16nm FinFET CMOS",
+    description: "IEEE JSSC 2021 - Enabling high-bandwidth data-converter based I/O. Published with Caragiulo et al.",
+    tags: ["IEEE JSSC 2021", "16nm FinFET", "DAC"],
+    type: "publication",
     featured: true,
   },
   {
-    title: "Task Management App",
-    description: "Collaborative task management tool with real-time updates and team features.",
-    tags: ["React", "Firebase", "Tailwind"],
-    liveUrl: "#",
-    githubUrl: "#",
+    title: "80 GS/s 5.5 ENOB Time-Interleaved CMOS Track-And-Hold",
+    description: "Electronics Letters 2020 - Pushing boundaries of data acquisition. Co-authored with B. Murmann.",
+    tags: ["Electronics Letters 2020", "Data Acquisition", "Time-Interleaved"],
+    type: "publication",
+    featured: true,
+  },
+  {
+    title: "Charge-steering Transmitter",
+    description: "US Patent 10,418,976 - Power-efficient data transmission architecture for high-speed communication systems.",
+    tags: ["US Patent", "Transmitter", "Power Efficiency"],
+    type: "patent",
     featured: false,
   },
   {
-    title: "Weather Application",
-    description: "Beautiful weather app with location-based forecasts and interactive maps.",
-    tags: ["React", "OpenWeather API", "Mapbox"],
-    liveUrl: "#",
-    githubUrl: "#",
+    title: "Logic Gates with Data-Independent Delay",
+    description: "US Patents 10,305,487 & 10,333,524 - Timing reliability improvements for high-speed digital circuits.",
+    tags: ["US Patent", "Timing", "Digital Circuits"],
+    type: "patent",
+    featured: false,
+  },
+  {
+    title: "DFE Hysteresis Compensation",
+    description: "US Patent 10,230,359 - Signal integrity optimization for high-speed serial data links.",
+    tags: ["US Patent", "Signal Integrity", "DFE"],
+    type: "patent",
     featured: false,
   },
 ];
@@ -39,8 +49,8 @@ const Portfolio = () => {
   return (
     <section id="portfolio" className="section-padding bg-surface-subtle">
       <div className="container-narrow">
-        <h2 className="text-2xl font-semibold mb-2">Portfolio</h2>
-        <p className="text-text-secondary mb-12">Selected projects I've worked on.</p>
+        <h2 className="text-2xl font-semibold mb-2">Publications & Patents</h2>
+        <p className="text-text-secondary mb-12">Selected publications and granted patents from my research and engineering work.</p>
 
         <div className="grid gap-6">
           {projects.map((project, index) => (
@@ -70,20 +80,12 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <a
-                    href={project.githubUrl}
-                    className="p-2 text-text-secondary hover:text-foreground transition-colors"
-                    aria-label="View source code"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                  <a
-                    href={project.liveUrl}
-                    className="p-2 text-text-secondary hover:text-accent transition-colors"
-                    aria-label="View live site"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </a>
+                  {project.type === "patent" && (
+                    <Award className="w-5 h-5 text-text-secondary" aria-label="Patent" />
+                  )}
+                  {project.type === "publication" && (
+                    <ExternalLink className="w-5 h-5 text-text-secondary" aria-label="Publication" />
+                  )}
                 </div>
               </div>
             </div>

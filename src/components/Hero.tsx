@@ -9,21 +9,21 @@ const Hero = () => {
             Hi, my name is
           </p>
           <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in opacity-0" style={{ animationDelay: "0.2s" }}>
-            John Doe
+            Oscar Mattia, PhD
           </h1>
           <h2 className="text-2xl md:text-4xl text-text-secondary font-medium mb-6 animate-fade-in opacity-0" style={{ animationDelay: "0.3s" }}>
-            I build things for the web.
+            Engineering Leader | Silicon Systems Architect
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed max-w-xl mb-10 animate-fade-in opacity-0" style={{ animationDelay: "0.4s" }}>
-            I'm a software engineer specializing in building exceptional digital experiences. 
-            Currently focused on creating accessible, human-centered products.
+            Analog / mixed-signal hardware architect with 11+ years developing high-performance silicon solutions. 
+            Depth and breadth in silicon electronic systems, from high-speed wired, optical and wireless links to next-generation micro-displays.
           </p>
           <div className="flex gap-4 animate-fade-in opacity-0" style={{ animationDelay: "0.5s" }}>
             <a
               href="#portfolio"
               className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-md font-medium hover:bg-foreground/90 transition-colors"
             >
-              View My Work
+              View Publications
             </a>
             <a
               href="#about"
