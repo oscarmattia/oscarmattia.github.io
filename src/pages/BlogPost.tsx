@@ -1,8 +1,13 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { blogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import MermaidDiagram from "@/components/MermaidDiagram";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -11,158 +16,6 @@ const BlogPost = () => {
   if (!post) {
     return <Navigate to="/" replace />;
   }
-
-  // Simple markdown-like rendering for content
-  const renderContent = (content: string) => {
-    const lines = content.split("\n");
-    const elements: JSX.Element[] = [];
-    let currentCodeBlock: string[] = [];
-    let inCodeBlock = false;
-    let codeLanguage = "";
-
-    lines.forEach((line, index) => {
-      // Code blocks
-      if (line.trim().startsWith("```")) {
-        if (inCodeBlock) {
-          // End code block
-          elements.push(
-            <pre
-              key={`code-${index}`}
-              className="bg-secondary p-4 rounded-lg overflow-x-auto my-4 font-mono text-sm"
-            >
-              <code>{currentCodeBlock.join("\n")}</code>
-            </pre>
-          );
-          currentCodeBlock = [];
-          inCodeBlock = false;
-          codeLanguage = "";
-        } else {
-          // Start code block
-          inCodeBlock = true;
-          codeLanguage = line.trim().replace("```", "").trim();
-        }
-        return;
-      }
-
-      if (inCodeBlock) {
-        currentCodeBlock.push(line);
-        return;
-      }
-
-      // Headings
-      if (line.startsWith("# ")) {
-        elements.push(
-          <h1 key={index} className="text-3xl font-bold mt-8 mb-4 first:mt-0">
-            {line.substring(2)}
-          </h1>
-        );
-        return;
-      }
-      if (line.startsWith("## ")) {
-        elements.push(
-          <h2 key={index} className="text-2xl font-semibold mt-8 mb-4 first:mt-0">
-            {line.substring(3)}
-          </h2>
-        );
-        return;
-      }
-      if (line.startsWith("### ")) {
-        elements.push(
-          <h3 key={index} className="text-xl font-semibold mt-6 mb-3">
-            {line.substring(4)}
-          </h3>
-        );
-        return;
-      }
-
-      // Links
-      if (line.includes("](") && line.includes(")")) {
-        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-        let match;
-        let lastIndex = 0;
-        const parts: (string | JSX.Element)[] = [];
-
-        while ((match = linkRegex.exec(line)) !== null) {
-          parts.push(line.substring(lastIndex, match.index));
-          parts.push(
-            <a
-              key={`link-${match.index}`}
-              href={match[2]}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline underline-offset-2"
-            >
-              {match[1]}
-            </a>
-          );
-          lastIndex = match.index + match[0].length;
-        }
-        parts.push(line.substring(lastIndex));
-
-        elements.push(
-          <p key={index} className="text-text-secondary leading-relaxed mb-4">
-            {parts}
-          </p>
-        );
-        return;
-      }
-
-      // Inline code
-      if (line.includes("`")) {
-        const codeRegex = /`([^`]+)`/g;
-        let match;
-        let lastIndex = 0;
-        const parts: (string | JSX.Element)[] = [];
-
-        while ((match = codeRegex.exec(line)) !== null) {
-          parts.push(line.substring(lastIndex, match.index));
-          parts.push(
-            <code
-              key={`inline-code-${match.index}`}
-              className="bg-secondary px-1.5 py-0.5 rounded font-mono text-sm text-foreground"
-            >
-              {match[1]}
-            </code>
-          );
-          lastIndex = match.index + match[0].length;
-        }
-        parts.push(line.substring(lastIndex));
-
-        elements.push(
-          <p key={index} className="text-text-secondary leading-relaxed mb-4">
-            {parts}
-          </p>
-        );
-        return;
-      }
-
-      // Empty lines
-      if (line.trim() === "") {
-        return;
-      }
-
-      // Regular paragraphs
-      elements.push(
-        <p key={index} className="text-text-secondary leading-relaxed mb-4">
-          {line}
-        </p>
-      );
-    });
-
-    // Handle any remaining code block
-    if (inCodeBlock && currentCodeBlock.length > 0) {
-      elements.push(
-        <pre
-          key="code-final"
-          className="bg-secondary p-4 rounded-lg overflow-x-auto my-4 font-mono text-sm"
-        >
-          <code>{currentCodeBlock.join("\n")}</code>
-        </pre>
-      );
-    }
-
-    return elements;
-  };
 
   return (
     <div className="min-h-screen">
@@ -194,11 +47,175 @@ const BlogPost = () => {
             </div>
           </header>
 
-          {/* Content */}
-          <div className="prose prose-lg max-w-none">
-            <div className="text-text-secondary space-y-4">
-              {renderContent(post.content)}
-            </div>
+          {/* Content with Markdown */}
+          <div className="prose prose-lg dark:prose-invert max-w-none 
+            prose-headings:text-foreground 
+            prose-headings:font-bold prose-headings:tracking-tight
+            prose-h1:text-4xl prose-h1:mt-12 prose-h1:mb-6 prose-h1:first:mt-0
+            prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-5 prose-h2:border-b prose-h2:border-border prose-h2:pb-2
+            prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
+            prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-3
+            prose-p:text-text-secondary prose-p:leading-relaxed prose-p:my-6
+            prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-foreground prose-strong:font-semibold
+            prose-code:text-foreground prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-['']
+            prose-pre:bg-secondary prose-pre:border prose-pre:border-border prose-pre:p-0 prose-pre:my-6
+            prose-img:rounded-lg prose-img:my-8 prose-img:w-full
+            prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-6 prose-blockquote:my-6 prose-blockquote:text-text-secondary prose-blockquote:italic
+            prose-ul:my-6 prose-ol:my-6 prose-li:my-2
+            prose-table:text-text-secondary prose-th:text-foreground prose-td:border-border prose-table:my-6
+            prose-hr:my-8 prose-hr:border-border">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // Custom heading components with better spacing
+                h1({ node, children, ...props }: any) {
+                  return (
+                    <h1 className="text-4xl font-bold tracking-tight mt-12 mb-6 first:mt-0 text-foreground" {...props}>
+                      {children}
+                    </h1>
+                  );
+                },
+                h2({ node, children, ...props }: any) {
+                  return (
+                    <h2 className="text-3xl font-bold tracking-tight mt-10 mb-5 text-foreground border-b border-border pb-2" {...props}>
+                      {children}
+                    </h2>
+                  );
+                },
+                h3({ node, children, ...props }: any) {
+                  return (
+                    <h3 className="text-2xl font-semibold tracking-tight mt-8 mb-4 text-foreground" {...props}>
+                      {children}
+                    </h3>
+                  );
+                },
+                h4({ node, children, ...props }: any) {
+                  return (
+                    <h4 className="text-xl font-semibold tracking-tight mt-6 mb-3 text-foreground" {...props}>
+                      {children}
+                    </h4>
+                  );
+                },
+                // Custom paragraph with better spacing
+                p({ node, children, ...props }: any) {
+                  return (
+                    <p className="text-text-secondary leading-relaxed my-6" {...props}>
+                      {children}
+                    </p>
+                  );
+                },
+                // Custom code block with syntax highlighting and Mermaid support
+                code({ node, inline, className, children, ...props }: any) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const language = match ? match[1] : "";
+                  const codeContent = String(children).replace(/\n$/, "");
+                  
+                  // Handle Mermaid diagrams
+                  if (!inline && language === "mermaid") {
+                    return <MermaidDiagram chart={codeContent} />;
+                  }
+                  
+                  return !inline && language ? (
+                    <SyntaxHighlighter
+                      style={vscDarkPlus}
+                      language={language}
+                      PreTag="div"
+                      className="rounded-lg !bg-secondary !p-4 my-6 border border-border"
+                      customStyle={{
+                        margin: 0,
+                        borderRadius: "0.5rem",
+                      }}
+                      {...props}
+                    >
+                      {codeContent}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={`${className || ""} bg-secondary px-1.5 py-0.5 rounded font-mono text-sm text-foreground`} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+                // Custom image handling (supports both static and dynamic)
+                img({ node, src, alt, ...props }: any) {
+                  // Handle static images from public/blog folder
+                  if (src?.startsWith("/blog/") || src?.startsWith("/")) {
+                    return (
+                      <img
+                        src={src}
+                        alt={alt || ""}
+                        className="rounded-lg my-8 w-full h-auto"
+                        loading="lazy"
+                        {...props}
+                      />
+                    );
+                  }
+                  // Handle external/dynamic images
+                  return (
+                    <img
+                      src={src}
+                      alt={alt || ""}
+                      className="rounded-lg my-8 w-full h-auto"
+                      loading="lazy"
+                      {...props}
+                    />
+                  );
+                },
+                // Custom list components with better spacing
+                ul({ node, children, ...props }: any) {
+                  return (
+                    <ul className="my-6 ml-6 list-disc space-y-2 text-text-secondary" {...props}>
+                      {children}
+                    </ul>
+                  );
+                },
+                ol({ node, children, ...props }: any) {
+                  return (
+                    <ol className="my-6 ml-6 list-decimal space-y-2 text-text-secondary" {...props}>
+                      {children}
+                    </ol>
+                  );
+                },
+                li({ node, children, ...props }: any) {
+                  return (
+                    <li className="my-2 leading-relaxed" {...props}>
+                      {children}
+                    </li>
+                  );
+                },
+                // Custom blockquote with better spacing
+                blockquote({ node, children, ...props }: any) {
+                  return (
+                    <blockquote className="border-l-4 border-accent pl-6 my-6 italic text-text-secondary" {...props}>
+                      {children}
+                    </blockquote>
+                  );
+                },
+                // Custom horizontal rule
+                hr({ node, ...props }: any) {
+                  return (
+                    <hr className="my-8 border-border" {...props} />
+                  );
+                },
+                // Custom link styling
+                a({ node, href, children, ...props }: any) {
+                  const isExternal = href?.startsWith("http");
+                  return (
+                    <a
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="text-accent hover:underline underline-offset-2"
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  );
+                },
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
           </div>
         </div>
       </article>

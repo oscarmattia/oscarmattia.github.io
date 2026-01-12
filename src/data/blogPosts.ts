@@ -110,6 +110,26 @@ However, analog calibration requires hardware modifications, increasing design c
 
 The choice between DSP-based and analog/mixed-signal calibration depends on system requirements. For applications where power consumption is critical and hardware modifications are feasible, analog/mixed-signal approaches are often preferred. For applications requiring flexibility, background operation, or where hardware changes are impractical, DSP-based methods are more suitable.
 
+\`\`\`mermaid
+graph TB
+    subgraph DSP["DSP-Based Calibration"]
+        A1[ADC Output] --> A2[Digital Processing]
+        A2 --> A3[Correction Applied]
+        A3 --> A4[Calibrated Signal]
+    end
+    
+    subgraph Analog["Analog/Mixed-Signal Calibration"]
+        B1[Clock Adjustment] --> B2[Hardware Correction]
+        B2 --> B3[Calibrated ADC]
+        B3 --> B4[Calibrated Signal]
+    end
+    
+    style DSP fill:#e1f5ff
+    style Analog fill:#d4edda
+    style A4 fill:#fff3cd
+    style B4 fill:#fff3cd
+\`\`\`
+
 In practice, many high-performance systems use hybrid approaches: analog/mixed-signal techniques provide coarse correction, minimizing large errors, while DSP-based methods provide fine-tuning of residual mismatches. This combination leverages the advantages of both approaches.
 
 ## 3. Implementation Examples
@@ -119,6 +139,25 @@ To illustrate the fundamental differences between DSP-based and analog/mixed-sig
 ### DSP-Based Implementation: Digital Timing Skew Correction
 
 The DSP-based approach, as implemented in \`simple_digital_timing_skew.py\`, corrects timing skew through digital post-processing. The core concept is to apply fractional delay filters to align the sampling instants of different channels.
+
+\`\`\`mermaid
+graph LR
+    A[Input Signal] --> B[Channel 1<br/>ADC]
+    A --> C[Channel 2<br/>ADC]
+    A --> D[Channel 3<br/>ADC]
+    A --> E[Channel 4<br/>ADC]
+    B --> F[Digital<br/>Processing]
+    C --> F
+    D --> F
+    E --> F
+    F --> G[Fractional Delay<br/>Filters]
+    G --> H[Corrected<br/>Output]
+    
+    style A fill:#e1f5ff
+    style H fill:#d4edda
+    style F fill:#fff3cd
+    style G fill:#fff3cd
+\`\`\`
 
 \`\`\`python
 def correct_timing_skew_dsp(samples, skew_estimates, num_channels):
