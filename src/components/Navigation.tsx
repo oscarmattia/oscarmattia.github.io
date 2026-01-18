@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -11,6 +12,7 @@ const navItems = [
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -31,16 +33,30 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="text-sm text-text-secondary hover:text-foreground transition-colors"
+            >
+              {theme === "dark" ? "Light" : "Dark"}
+            </button>
           </div>
 
           {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 -mr-2"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="text-sm text-text-secondary hover:text-foreground transition-colors px-2"
+            >
+              {theme === "dark" ? "Light" : "Dark"}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 -mr-2"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Nav */}
