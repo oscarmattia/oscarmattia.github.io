@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import LogoMark from "@/components/LogoMark";
 import ThemeToggle from "@/components/ThemeToggle";
+import { handleSectionNavClick } from "@/lib/sectionScroll";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -18,7 +19,11 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-narrow">
         <div className="flex items-center justify-between h-16">
-          <a href="#" className="flex items-center gap-2.5 font-semibold text-lg tracking-tight">
+          <a
+            href="#home"
+            onClick={(event) => handleSectionNavClick(event, "#home")}
+            className="flex items-center gap-2.5 font-semibold text-lg tracking-tight"
+          >
             <LogoMark />
             OM<span className="text-accent">.</span>
           </a>
@@ -29,6 +34,7 @@ const Navigation = () => {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(event) => handleSectionNavClick(event, item.href)}
                 className="text-sm text-text-secondary hover:text-foreground transition-colors"
               >
                 {item.label}
@@ -57,7 +63,10 @@ const Navigation = () => {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={() => setIsOpen(false)}
+                onClick={(event) => {
+                  handleSectionNavClick(event, item.href);
+                  setIsOpen(false);
+                }}
                 className="block py-2 text-sm text-text-secondary hover:text-foreground transition-colors"
               >
                 {item.label}
