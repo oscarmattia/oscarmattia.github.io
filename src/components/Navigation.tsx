@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { useTheme } from "next-themes";
+import LogoMark from "@/components/LogoMark";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -12,13 +13,13 @@ const navItems = [
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-narrow">
         <div className="flex items-center justify-between h-16">
-          <a href="#" className="font-semibold text-lg tracking-tight">
+          <a href="#" className="flex items-center gap-2.5 font-semibold text-lg tracking-tight">
+            <LogoMark />
             OM<span className="text-accent">.</span>
           </a>
 
@@ -33,22 +34,12 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-sm text-text-secondary hover:text-foreground transition-colors"
-            >
-              {theme === "dark" ? "Light" : "Dark"}
-            </button>
+            <ThemeToggle />
           </div>
 
           {/* Mobile Toggle */}
           <div className="flex items-center gap-2 md:hidden">
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-sm text-text-secondary hover:text-foreground transition-colors px-2"
-            >
-              {theme === "dark" ? "Light" : "Dark"}
-            </button>
+            <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 -mr-2"
