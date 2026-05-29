@@ -1,35 +1,76 @@
-import { Briefcase, GraduationCap, MapPin, Mail } from "lucide-react";
+import { useState } from "react";
+import {
+  Briefcase,
+  ChevronDown,
+  GraduationCap,
+  Github,
+  Linkedin,
+  MapPin,
+  Mail,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const experiences = [
+const DEFAULT_VISIBLE_ITEMS = 3;
+
+type TimelineItem = {
+  title: string;
+  subtitle: string;
+  period: string;
+};
+
+const experiences: TimelineItem[] = [
   {
     title: "Display Silicon Engineer",
-    company: "Meta",
+    subtitle: "Meta",
     period: "2025 — Present",
-    description: "Building next-generation micro-displays for smart glasses. Pioneered systematic integration of LLMs in silicon modeling workflows. Developed industry first million-equation sparse linear system solver for power distribution in complex silicon systems, GPU accelerated.",
   },
   {
     title: "SMTS AMS IC Design Engineer",
-    company: "AMD",
+    subtitle: "AMD",
     period: "2024 - 2025",
-    description: "Led 10-engineer sub-system team developing next-generation DAC-based TX SerDes. Architected ultra-high-speed data converters in cutting-edge FinFET, pushing boundaries of what's technically feasible.",
   },
   {
     title: "Principal/Senior Engineer",
-    company: "d-Matrix & Luminous Computing",
+    subtitle: "d-Matrix & Luminous Computing",
     period: "2022 - 2024",
-    description: "Led development of novel D2D interfaces and silicon photonic links for AI acceleration. Built and mentored engineering teams, establishing design methodologies and documentation standards.",
   },
   {
     title: "Mixed-Signal IC Design Engineer",
-    company: "Apple",
+    subtitle: "Apple",
     period: "2020 - 2022",
-    description: "Built in test mixed-signal architectures for modern SoCs. Created ultra-compact monitoring systems and built-in self-test infrastructure for high-speed interface characterization.",
   },
   {
     title: "Post-Doctoral Research Fellow",
-    company: "Stanford University/DARPA",
+    subtitle: "Stanford University/DARPA",
     period: "2019 - 2020",
-    description: "Advanced fundamental research in high-speed data conversion. Supervised 3 graduate students, 16nm CMOS FinFET tape-out from scratch in 6 months. Published results in top-tier venues.",
+  },
+];
+
+const education: TimelineItem[] = [
+  {
+    title: "Post-doc in Electrical Engineering",
+    subtitle: "Murmann Lab, Stanford University",
+    period: "2020",
+  },
+  {
+    title: "Stanford Ignite Entrepreneurship Certificate",
+    subtitle: "Stanford University",
+    period: "2020",
+  },
+  {
+    title: "PhD in Engineering Sciences",
+    subtitle: "imec and Vrije Universiteit Brussels, Belgium",
+    period: "2019",
+  },
+  {
+    title: "MSc in Microelectronics",
+    subtitle: "Federal University of Rio Grande do Sul, Brazil",
+    period: "2014",
+  },
+  {
+    title: "BSc in Electrical and Electronics Engineering",
+    subtitle: "University of Caxias do Sul, Brazil",
+    period: "2011",
   },
 ];
 
@@ -46,7 +87,61 @@ const skills = [
   "Silicon Photonics",
 ];
 
+type CollapsibleTimelineProps = {
+  title: string;
+  icon: typeof Briefcase;
+  items: TimelineItem[];
+  expanded: boolean;
+  onToggle: () => void;
+  className?: string;
+};
+
+const CollapsibleTimeline = ({
+  title,
+  icon: Icon,
+  items,
+  expanded,
+  onToggle,
+  className,
+}: CollapsibleTimelineProps) => {
+  const visibleItems = expanded ? items : items.slice(0, DEFAULT_VISIBLE_ITEMS);
+  const canExpand = items.length > DEFAULT_VISIBLE_ITEMS;
+
+  return (
+    <div className={className}>
+      <h3 className="text-sm font-medium mb-6 flex items-center gap-2">
+        <Icon className="w-4 h-4 text-accent" />
+        {title}
+      </h3>
+      <div className="space-y-6">
+        {visibleItems.map((item) => (
+          <div key={`${item.title}-${item.period}`} className="relative pl-4 border-l border-border">
+            <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
+            <p className="font-medium text-sm">{item.title}</p>
+            <p className="text-text-secondary text-sm">{item.subtitle}</p>
+            <p className="text-text-tertiary text-xs font-mono mt-1">{item.period}</p>
+          </div>
+        ))}
+      </div>
+      {canExpand && (
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={expanded}
+          className="mt-4 inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-accent transition-colors"
+        >
+          {expanded ? "Show less" : `Show ${items.length - DEFAULT_VISIBLE_ITEMS} more`}
+          <ChevronDown className={cn("w-4 h-4 transition-transform", expanded && "rotate-180")} />
+        </button>
+      )}
+    </div>
+  );
+};
+
 const About = () => {
+  const [experienceExpanded, setExperienceExpanded] = useState(false);
+  const [educationExpanded, setEducationExpanded] = useState(false);
+
   return (
     <section id="about" className="section-padding">
       <div className="container-narrow">
@@ -68,14 +163,37 @@ const About = () => {
             </p>
 
             {/* Quick Info */}
-            <div className="flex flex-wrap gap-6 pt-4">
+            <div className="flex flex-wrap items-center gap-6 pt-4">
               <div className="flex items-center gap-2 text-sm text-text-secondary">
                 <MapPin className="w-4 h-4 text-accent" />
                 Seattle, WA
               </div>
-              <div className="flex items-center gap-2 text-sm text-text-secondary">
-                <Mail className="w-4 h-4 text-accent" />
-                oscar.mattia@gmail.com
+              <div className="flex items-center gap-1">
+                <a
+                  href="mailto:oscar.mattia@gmail.com"
+                  className="p-2 text-text-secondary hover:text-accent transition-colors"
+                  aria-label="Email"
+                >
+                  <Mail className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://github.com/oscarmattia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-text-secondary hover:text-accent transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/oscar-mattia-7170b834/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-text-secondary hover:text-accent transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
               </div>
             </div>
 
@@ -95,59 +213,24 @@ const About = () => {
             </div>
           </div>
 
-          {/* Experience */}
+          {/* Experience & Education */}
           <div>
-            <h3 className="text-sm font-medium mb-6 flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-accent" />
-              Experience
-            </h3>
-            <div className="space-y-6">
-              {experiences.map((exp, index) => (
-                <div key={index} className="relative pl-4 border-l border-border">
-                  <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                  <p className="font-medium text-sm">{exp.title}</p>
-                  <p className="text-text-secondary text-sm">{exp.company}</p>
-                  <p className="text-text-tertiary text-xs font-mono mt-1">{exp.period}</p>
-                </div>
-              ))}
-            </div>
+            <CollapsibleTimeline
+              title="Experience"
+              icon={Briefcase}
+              items={experiences}
+              expanded={experienceExpanded}
+              onToggle={() => setExperienceExpanded((open) => !open)}
+            />
 
-            <h3 className="text-sm font-medium mt-10 mb-6 flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-accent" />
-              Education
-            </h3>
-            <div className="space-y-6">
-              <div className="relative pl-4 border-l border-border">
-                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                <p className="font-medium text-sm">Post-doc in Electrical Engineering</p>
-                <p className="text-text-secondary text-sm">Murmann Lab, Stanford University</p>
-                <p className="text-text-tertiary text-xs font-mono mt-1">2020</p>
-              </div>
-              <div className="relative pl-4 border-l border-border">
-                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                <p className="font-medium text-sm">Stanford Ignite Entrepreneurship Certificate</p>
-                <p className="text-text-secondary text-sm">Stanford University</p>
-                <p className="text-text-tertiary text-xs font-mono mt-1">2020</p>
-              </div>
-              <div className="relative pl-4 border-l border-border">
-                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                <p className="font-medium text-sm">PhD in Engineering Sciences</p>
-                <p className="text-text-secondary text-sm">imec and Vrije Universiteit Brussels, Belgium</p>
-                <p className="text-text-tertiary text-xs font-mono mt-1">2019</p>
-              </div>
-              <div className="relative pl-4 border-l border-border">
-                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                <p className="font-medium text-sm">MSc in Microelectronics</p>
-                <p className="text-text-secondary text-sm">Federal University of Rio Grande do Sul, Brazil</p>
-                <p className="text-text-tertiary text-xs font-mono mt-1">2014</p>
-              </div>
-              <div className="relative pl-4 border-l border-border">
-                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-accent rounded-full -translate-x-[3px]" />
-                <p className="font-medium text-sm">BSc in Electrical and Electronics Engineering</p>
-                <p className="text-text-secondary text-sm">University of Caxias do Sul, Brazil</p>
-                <p className="text-text-tertiary text-xs font-mono mt-1">2011</p>
-              </div>
-            </div>
+            <CollapsibleTimeline
+              title="Education"
+              icon={GraduationCap}
+              items={education}
+              expanded={educationExpanded}
+              onToggle={() => setEducationExpanded((open) => !open)}
+              className="mt-10"
+            />
           </div>
         </div>
       </div>
