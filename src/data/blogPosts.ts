@@ -1,3 +1,5 @@
+import { howThisSiteWasBuiltPost } from "./howThisSiteWasBuiltPost";
+
 export interface BlogPost {
   title: string;
   excerpt: string;
@@ -5,10 +7,16 @@ export interface BlogPost {
   readTime: string;
   slug: string;
   content: string;
+  published?: boolean;
 }
 
+export const publishedBlogPosts = (posts: BlogPost[]) =>
+  posts.filter((post) => post.published !== false);
+
 export const blogPosts: BlogPost[] = [
+  howThisSiteWasBuiltPost,
   {
+    published: false,
     title: "Calibration of Time-Interleaved ADCs: DSP-Based vs Analog/Mixed-Signal Approaches",
     excerpt: "A technical deep-dive into time-interleaved ADC calibration, comparing digital post-processing and hardware-level correction techniques with practical code examples and design insights.",
     date: "Jan 10, 2026",

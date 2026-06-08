@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-label="GitHub Actions deploy pipeline">
+  <rect width="960" height="420" fill="#111111"/>
+  <text x="480" y="40" fill="#f5f5f5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Deploy pipeline on every push to main</text>
+
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <rect x="40" y="90" width="150" height="64" rx="10" fill="#1a1a1a" stroke="#333333"/>
+    <text x="115" y="118" fill="#f5f5f5" font-size="14" font-weight="600" text-anchor="middle">git push</text>
+    <text x="115" y="140" fill="#a3a3a3" font-size="12" text-anchor="middle">to main</text>
+
+    <rect x="240" y="90" width="150" height="64" rx="10" fill="#1a1a1a" stroke="#333333"/>
+    <text x="315" y="118" fill="#f5f5f5" font-size="14" font-weight="600" text-anchor="middle">GitHub Actions</text>
+    <text x="315" y="140" fill="#a3a3a3" font-size="12" text-anchor="middle">workflow starts</text>
+
+    <rect x="440" y="90" width="150" height="64" rx="10" fill="#1a1a1a" stroke="#333333"/>
+    <text x="515" y="118" fill="#f5f5f5" font-size="14" font-weight="600" text-anchor="middle">npm ci</text>
+    <text x="515" y="140" fill="#a3a3a3" font-size="12" text-anchor="middle">install deps</text>
+
+    <rect x="640" y="90" width="150" height="64" rx="10" fill="#242424" stroke="#3b82f6"/>
+    <text x="715" y="118" fill="#f5f5f5" font-size="14" font-weight="600" text-anchor="middle">npm run build</text>
+    <text x="715" y="140" fill="#a3a3a3" font-size="12" text-anchor="middle">creates dist/</text>
+
+    <rect x="790" y="210" width="130" height="64" rx="10" fill="#3d1f0f" stroke="#f97316"/>
+    <text x="855" y="238" fill="#f5f5f5" font-size="14" font-weight="600" text-anchor="middle">Deploy</text>
+    <text x="855" y="260" fill="#fdba74" font-size="12" text-anchor="middle">to Pages</text>
+
+    <path d="M190 122 H240" stroke="#737373" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M390 122 H440" stroke="#737373" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M590 122 H640" stroke="#737373" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M715 154 V190 H855 V210" stroke="#737373" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="120" y="300" width="720" height="84" rx="12" fill="#1e3a5f" stroke="#3b82f6"/>
+    <text x="480" y="332" fill="#dbeafe" font-size="15" font-weight="600" text-anchor="middle">Live site: https://oscarmattia.github.io/</text>
+    <text x="480" y="358" fill="#93c5fd" font-size="13" text-anchor="middle">User site repo name (username.github.io) serves at the domain root</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#737373"/>
+    </marker>
+  </defs>
+</svg>

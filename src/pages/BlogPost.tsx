@@ -3,15 +3,18 @@ import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { blogPosts } from "@/data/blogPosts";
+import { getBrandCodeStyle } from "@/lib/brandCodeStyle";
+import { brandColors } from "@/lib/brandTheme";
+import { blogPosts, publishedBlogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import MermaidDiagram from "@/components/MermaidDiagram";
 
+const brandCodeStyle = getBrandCodeStyle();
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = publishedBlogPosts(blogPosts).find((p) => p.slug === slug);
 
   if (!post) {
     return <Navigate to="/" replace />;
@@ -59,11 +62,12 @@ const BlogPost = () => {
             prose-a:text-accent prose-a:no-underline hover:prose-a:underline
             prose-strong:text-foreground prose-strong:font-semibold
             prose-code:text-foreground prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-['']
-            prose-pre:bg-secondary prose-pre:border prose-pre:border-border prose-pre:p-0 prose-pre:my-6
+            prose-pre:border prose-pre:border-[#333333] prose-pre:p-0 prose-pre:my-6
+            prose-pre:bg-[#111111]
             prose-img:rounded-lg prose-img:my-8 prose-img:w-full
             prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-6 prose-blockquote:my-6 prose-blockquote:text-text-secondary prose-blockquote:italic
             prose-ul:my-6 prose-ol:my-6 prose-li:my-2
-            prose-table:text-text-secondary prose-th:text-foreground prose-td:border-border prose-table:my-6
+            prose-table:text-text-secondary prose-th:text-foreground prose-th:text-left prose-td:text-left prose-td:border-border prose-table:my-6
             prose-hr:my-8 prose-hr:border-border">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -118,13 +122,14 @@ const BlogPost = () => {
                   
                   return !inline && language ? (
                     <SyntaxHighlighter
-                      style={vscDarkPlus}
+                      style={brandCodeStyle}
                       language={language}
                       PreTag="div"
-                      className="rounded-lg !bg-secondary !p-4 my-6 border border-border"
+                      className="rounded-lg !p-4 my-6 border border-[#333333]"
                       customStyle={{
                         margin: 0,
                         borderRadius: "0.5rem",
+                        background: brandColors.canvas,
                       }}
                       {...props}
                     >
@@ -159,6 +164,42 @@ const BlogPost = () => {
                       loading="lazy"
                       {...props}
                     />
+                  );
+                },
+                // Custom table styling
+                table({ node, children, ...props }: any) {
+                  return (
+                    <div className="my-8 overflow-x-auto">
+                      <table className="w-full border-collapse text-left text-text-secondary" {...props}>
+                        {children}
+                      </table>
+                    </div>
+                  );
+                },
+                thead({ node, children, ...props }: any) {
+                  return <thead {...props}>{children}</thead>;
+                },
+                tbody({ node, children, ...props }: any) {
+                  return <tbody {...props}>{children}</tbody>;
+                },
+                tr({ node, children, ...props }: any) {
+                  return <tr className="border-b border-border last:border-b-0" {...props}>{children}</tr>;
+                },
+                th({ node, children, ...props }: any) {
+                  return (
+                    <th
+                      className="border-b border-border px-8 py-3 text-left align-top font-semibold text-foreground"
+                      {...props}
+                    >
+                      {children}
+                    </th>
+                  );
+                },
+                td({ node, children, ...props }: any) {
+                  return (
+                    <td className="px-8 py-3 text-left align-top" {...props}>
+                      {children}
+                    </td>
                   );
                 },
                 // Custom list components with better spacing

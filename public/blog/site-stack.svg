@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Website stack layers">
+  <rect width="960" height="540" fill="#111111"/>
+  <text x="480" y="42" fill="#f5f5f5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">From source code to what the browser loads</text>
+
+  <rect x="80" y="80" width="800" height="70" rx="10" fill="#1a1a1a" stroke="#333333"/>
+  <text x="100" y="108" fill="#a3a3a3" font-size="13" font-family="ui-monospace, monospace">src/</text>
+  <text x="100" y="132" fill="#f5f5f5" font-size="16" font-family="ui-sans-serif, system-ui, sans-serif">React components, TypeScript, page content</text>
+
+  <rect x="430" y="165" width="100" height="36" rx="6" fill="#3b82f6"/>
+  <text x="480" y="188" fill="#ffffff" font-size="14" font-weight="600" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">Vite build</text>
+  <path d="M480 150 L480 165" stroke="#737373" stroke-width="2"/>
+  <polygon points="480,165 475,155 485,155" fill="#737373"/>
+
+  <rect x="80" y="220" width="800" height="70" rx="10" fill="#1a1a1a" stroke="#333333"/>
+  <text x="100" y="248" fill="#a3a3a3" font-size="13" font-family="ui-monospace, monospace">dist/</text>
+  <text x="100" y="272" fill="#f5f5f5" font-size="16" font-family="ui-sans-serif, system-ui, sans-serif">Static output: HTML, bundled JS/CSS, images</text>
+
+  <rect x="430" y="305" width="100" height="36" rx="6" fill="#f97316"/>
+  <text x="480" y="328" fill="#ffffff" font-size="14" font-weight="600" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">GitHub Pages</text>
+  <path d="M480 290 L480 305" stroke="#737373" stroke-width="2"/>
+  <polygon points="480,305 475,295 485,295" fill="#737373"/>
+
+  <rect x="80" y="360" width="800" height="70" rx="10" fill="#1a1a1a" stroke="#333333"/>
+  <text x="100" y="388" fill="#a3a3a3" font-size="13" font-family="ui-monospace, monospace">Browser</text>
+  <text x="100" y="412" fill="#f5f5f5" font-size="16" font-family="ui-sans-serif, system-ui, sans-serif">Downloads files and runs JavaScript to render the page</text>
+
+  <path d="M480 430 L480 445" stroke="#737373" stroke-width="2"/>
+  <polygon points="480,445 475,435 485,435" fill="#737373"/>
+
+  <rect x="180" y="455" width="600" height="52" rx="10" fill="#1e3a5f" stroke="#3b82f6"/>
+  <text x="480" y="487" fill="#dbeafe" font-size="15" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif">No server-side code runs at request time - only static files</text>
+</svg>

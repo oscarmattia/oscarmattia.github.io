@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# oscarmattia.github.io
 
-## Project info
+Personal portfolio site for Oscar Mattia, PhD — engineering leader and AMS architect. The site presents bio, publications, patents, open-source work, a photo gallery, and a technical blog.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Live site:** [https://oscarmattia.github.io](https://oscarmattia.github.io)
 
-## How can I edit this code?
+## Stack
 
-There are several ways of editing your application.
+| Layer | Technology |
+|-------|------------|
+| UI | [React](https://react.dev/) 18 |
+| Language | [TypeScript](https://www.typescriptlang.org/) |
+| Build | [Vite](https://vitejs.dev/) |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
+| Routing | [React Router](https://reactrouter.com/) |
+| Content | Markdown blog posts, static assets in `public/` |
+| Hosting | [GitHub Pages](https://pages.github.com/) via GitHub Actions |
 
-**Use Lovable**
+The site is a static SPA: there is no backend. Production builds output HTML, JS, CSS, and assets to `dist/`.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Local development
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js 20+ and npm.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/oscarmattia/oscarmattia.github.io.git
+cd oscarmattia.github.io
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:8080](http://localhost:8080). Vite hot-reloads as you edit files under `src/`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Build & deploy
 
-**Use GitHub Codespaces**
+```sh
+npm run build:pages   # Production build + SPA 404 fallback for GitHub Pages
+npm run preview       # Preview the built site locally
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which runs `npm ci`, audits dependencies, builds the site, and publishes `dist/` to GitHub Pages.
 
-## What technologies are used for this project?
+## Project layout
 
-This project is built with:
+```
+src/components/   UI sections (Hero, About, Portfolio, Gallery, Blog, …)
+src/pages/        Route pages (home, blog post, 404)
+src/data/         Blog posts and structured content
+public/           Static files (images, favicon, blog diagrams)
+.github/          Deploy workflow and Dependabot config
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## License
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+All rights reserved unless otherwise noted.
