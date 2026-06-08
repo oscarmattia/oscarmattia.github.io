@@ -6,7 +6,6 @@ import {
   Github,
   Linkedin,
   MapPin,
-  Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -169,13 +168,6 @@ const About = () => {
                 Seattle, WA
               </div>
               <div className="flex items-center gap-1">
-                <a
-                  href="mailto:oscar.mattia@gmail.com"
-                  className="p-2 text-text-secondary hover:text-accent transition-colors"
-                  aria-label="Email"
-                >
-                  <Mail className="w-5 h-5" />
-                </a>
                 <a
                   href="https://github.com/oscarmattia"
                   target="_blank"

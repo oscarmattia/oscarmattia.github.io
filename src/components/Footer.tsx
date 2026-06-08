@@ -1,10 +1,9 @@
-import { Github, Linkedin, MessageSquare, Mail } from "lucide-react";
+import { Github, Linkedin, MessageSquare } from "lucide-react";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/oscarmattia", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/oscar-mattia-7170b834/", label: "LinkedIn" },
   { icon: MessageSquare, href: "https://www.threads.com/@oscarmattia", label: "Threads" },
-  { icon: Mail, href: "mailto:oscar.mattia@gmail.com", label: "Email" },
 ];
 
 const Footer = () => {
