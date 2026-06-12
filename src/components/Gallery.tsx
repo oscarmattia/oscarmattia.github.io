@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Shuffle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const MAX_GALLERY_IMAGES = 8;
@@ -58,16 +60,28 @@ const allImages = [
   "yellowstone-swamp.jpg",
 ];
 
+function pickRandomGalleryImages() {
+  const { count, cols } = getGalleryGrid(allImages.length);
+  const shuffled = [...allImages].sort(() => Math.random() - 0.5);
+
+  return {
+    images: shuffled.slice(0, count),
+    cols,
+  };
+}
+
 const Gallery = () => {
   const [displayedImages, setDisplayedImages] = useState<string[]>([]);
   const [gridCols, setGridCols] = useState(2);
 
-  useEffect(() => {
-    const { count, cols } = getGalleryGrid(allImages.length);
-    const shuffled = [...allImages].sort(() => Math.random() - 0.5);
-
-    setDisplayedImages(shuffled.slice(0, count));
+  const shuffleGallery = () => {
+    const { images, cols } = pickRandomGalleryImages();
+    setDisplayedImages(images);
     setGridCols(cols);
+  };
+
+  useEffect(() => {
+    shuffleGallery();
   }, []);
 
   if (displayedImages.length === 0) {
@@ -110,6 +124,19 @@ const Gallery = () => {
               />
             </div>
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={shuffleGallery}
+            aria-label="Shuffle gallery photos"
+            className="border-border px-6 font-medium hover:bg-secondary hover:text-foreground"
+          >
+            <Shuffle />
+            Shuffle
+          </Button>
         </div>
       </div>
     </section>

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import LogoMark from "@/components/LogoMark";
 import ThemeToggle from "@/components/ThemeToggle";
-import { handleSectionNavClick } from "@/lib/sectionScroll";
+import { handleSectionNavClick, navigateToSection } from "@/lib/sectionScroll";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -14,19 +15,31 @@ const navItems = [
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname !== "/") {
+      return;
+    }
+
+    event.preventDefault();
+    if (!navigateToSection("#home")) {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-narrow">
         <div className="flex items-center justify-between h-16">
-          <a
-            href="#home"
-            onClick={(event) => handleSectionNavClick(event, "#home")}
+          <Link
+            to="/"
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 font-semibold text-lg tracking-tight"
           >
             <LogoMark />
             OM<span className="text-accent">.</span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
