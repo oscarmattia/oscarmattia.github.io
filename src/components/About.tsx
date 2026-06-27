@@ -165,7 +165,7 @@ const About = () => {
             <div className="flex flex-wrap items-center gap-6 pt-4">
               <div className="flex items-center gap-2 text-sm text-text-secondary">
                 <MapPin className="w-4 h-4 text-accent" />
-                Seattle, WA
+                San Francisco, CA
               </div>
               <div className="flex items-center gap-1">
                 <a
