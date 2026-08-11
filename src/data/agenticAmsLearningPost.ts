@@ -1,5 +1,5 @@
 export const agenticAmsLearningPost = {
-  published: true,
+  published: false,
   title: "World Models for Silicon — Written, Not Learned",
   excerpt:
     "Agentic chip design needs more than a wrapper around a simulator. Using ams_platform and serial_link_tools, this post explains what an honest AMS learning environment looks like—and why the scarce asset is encoded design judgment, not a smarter proposer.",
