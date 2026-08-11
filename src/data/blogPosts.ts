@@ -1,3 +1,4 @@
+import { agenticAmsLearningPost } from "./agenticAmsLearningPost";
 import { howThisSiteWasBuiltPost } from "./howThisSiteWasBuiltPost";
 
 export interface BlogPost {
@@ -14,6 +15,7 @@ export const publishedBlogPosts = (posts: BlogPost[]) =>
   posts.filter((post) => post.published !== false);
 
 export const blogPosts: BlogPost[] = [
+  agenticAmsLearningPost,
   howThisSiteWasBuiltPost,
   {
     published: false,

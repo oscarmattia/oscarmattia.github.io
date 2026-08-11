@@ -9,6 +9,7 @@ import { blogPosts, publishedBlogPosts } from "@/data/blogPosts";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import MermaidDiagram from "@/components/MermaidDiagram";
+import { renderBlogDiagram } from "@/components/blog/BlogDiagram";
 
 const brandCodeStyle = getBrandCodeStyle();
 
@@ -119,6 +120,18 @@ const BlogPost = () => {
                   if (!inline && language === "mermaid") {
                     return <MermaidDiagram chart={codeContent} />;
                   }
+
+                  // Handle TypeScript-authored blog diagrams by id
+                  if (!inline && language === "diagram") {
+                    const diagram = renderBlogDiagram(codeContent);
+                    if (diagram) return <>{diagram}</>;
+                    return (
+                      <div className="my-8 rounded-lg border border-orange-500/40 bg-orange-950/30 p-4 text-sm text-text-secondary">
+                        Unknown blog diagram:{" "}
+                        <code className="font-mono text-foreground">{codeContent.trim()}</code>
+                      </div>
+                    );
+                  }
                   
                   return !inline && language ? (
                     <SyntaxHighlighter
@@ -140,6 +153,10 @@ const BlogPost = () => {
                       {children}
                     </code>
                   );
+                },
+                // Unwrap fenced blocks so Mermaid / TS diagrams are not nested in <pre>
+                pre({ children }) {
+                  return <>{children}</>;
                 },
                 // Custom image handling (supports both static and dynamic)
                 img({ node, src, alt, ...props }: any) {
