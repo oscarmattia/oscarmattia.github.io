@@ -21,7 +21,7 @@ const experiences: TimelineItem[] = [
   {
     title: "Display Silicon Engineer",
     subtitle: "Meta",
-    period: "2025 — Present",
+    period: "2025 — 2026",
   },
   {
     title: "SMTS AMS IC Design Engineer",
