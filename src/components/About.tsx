@@ -19,52 +19,67 @@ type TimelineItem = {
 
 const experiences: TimelineItem[] = [
   {
+    title: "World Models for AMS IC Design",
+    subtitle: "Self-Employed",
+    period: "2026 — present",
+  },
+  {
+    title: "Member of Technical Staff",
+    subtitle: "Gen Alpha Transistor",
+    period: "2026",
+  },
+  {
     title: "Display Silicon Engineer",
-    subtitle: "Meta",
+    subtitle: "Meta Reality Labs",
     period: "2025 — 2026",
   },
   {
     title: "SMTS AMS IC Design Engineer",
     subtitle: "AMD",
-    period: "2024 - 2025",
+    period: "2024 — 2025",
   },
   {
-    title: "Principal/Senior Engineer",
-    subtitle: "d-Matrix & Luminous Computing",
-    period: "2022 - 2024",
+    title: "Principal AMS Engineer",
+    subtitle: "d-Matrix",
+    period: "2023 — 2024",
+  },
+  {
+    title: "Senior AMS Engineer",
+    subtitle: "Luminous Computing",
+    period: "2022 — 2023",
   },
   {
     title: "Mixed-Signal IC Design Engineer",
     subtitle: "Apple",
-    period: "2020 - 2022",
+    period: "2020 — 2022",
   },
   {
     title: "Post-Doctoral Research Fellow",
-    subtitle: "Stanford University/DARPA",
-    period: "2019 - 2020",
+    subtitle: "Stanford University / DARPA",
+    period: "2019 — 2020",
   },
 ];
 
 const education: TimelineItem[] = [
   {
-    title: "Post-doc in Electrical Engineering",
-    subtitle: "Murmann Lab, Stanford University",
-    period: "2020",
-  },
-  {
-    title: "Stanford Ignite Entrepreneurship Certificate",
+    title: "Post-doctoral Research Fellow in Electrical Engineering",
     subtitle: "Stanford University",
     period: "2020",
   },
   {
     title: "PhD in Engineering Sciences",
-    subtitle: "imec and Vrije Universiteit Brussels, Belgium",
+    subtitle: "Vrije Universiteit Brussels, Belgium",
     period: "2019",
   },
   {
     title: "MSc in Microelectronics",
     subtitle: "Federal University of Rio Grande do Sul, Brazil",
     period: "2014",
+  },
+  {
+    title: "Stanford Ignite Entrepreneurship Certificate",
+    subtitle: "Stanford University",
+    period: "2020",
   },
   {
     title: "BSc in Electrical and Electronics Engineering",
@@ -74,16 +89,16 @@ const education: TimelineItem[] = [
 ];
 
 const skills = [
-  "Engineering Leadership",
+  "0–1 Engineering Leadership",
   "Cross-functional Communication",
   "System Architecture",
-  "AI Infrastructure Silicon",
-  "FinFET (3nm-16nm)",
-  "High-speed SerDes",
-  "Data Converters",
-  "Python & MATLAB",
-  "Power Optimization",
-  "Silicon Photonics",
+  "AI Infra Silicon",
+  "FinFET (3nm–16nm)",
+  "High-speed SerDes / D2D / SiPh",
+  "AFEs & ADC/DAC Systems",
+  "Python & MATLAB Modeling",
+  "Agentic Workflows",
+  "Power & Signal Integrity",
 ];
 
 type CollapsibleTimelineProps = {
@@ -151,14 +166,14 @@ const About = () => {
           {/* Bio */}
           <div className="md:col-span-2 space-y-6">
             <p className="text-text-secondary leading-relaxed">
-              I'm an analog / mixed-signal hardware architect with 11+ years developing high-performance silicon solutions 
-              in varied settings from academia to startups to big tech. Broad background in high-speed wired, optical and 
-              wireless links, data converters, code modulated radars and more recently micro-displays.
+              I'm an AMS silicon designer, architect and algorithms engineer with 12+ years developing high-performance
+              solutions, from pathfinding to product, consumer to data-center. My core strength is full custom interface
+              silicon for new system applications — I work across the stack and thrive in 0–1 scenarios with high ambiguity.
             </p>
             <p className="text-text-secondary leading-relaxed">
-              Proven track record leading engineering teams while maintaining rigorous technical standards and fostering 
-              collaborative innovation. Passionate about technology and innovation, hands-dirty get-it-done mindset and 
-              eager to learn and expand into new areas.
+              I've supported cross-functional programs as silicon sub-system tech lead, coordinating teams of up to 10
+              designers and layout leads, and interfaced with packaging, digital, photonics, system hardware, and
+              opto-mech with custom silicon on the critical path. I've been in functional and matrix orgs, and hold 5 U.S. patents.
             </p>
 
             {/* Quick Info */}

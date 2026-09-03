@@ -16,8 +16,8 @@ type PortfolioItem = {
 
 const projects: PortfolioItem[] = [
   {
-    title: "Inverter-Based Analog Design for High-Speed Communications",
-    description: "IEEE ESSCIRC 2023 Invited Tutorial on modern analog design techniques for high-speed communication systems.",
+    title: "Inverter-Based Analog Design for High-Speed Links",
+    description: "IEEE ESSCIRC 2023 Invited Tutorial on modern analog design techniques for high-speed links.",
     tags: ["IEEE ESSCIRC 2023", "Tutorial", "Analog Design"],
     type: "publication",
     featured: true,
@@ -42,15 +42,15 @@ const projects: PortfolioItem[] = [
     ],
   },
   {
-    title: "80 GS/s 5.5 ENOB Time-Interleaved CMOS Track-And-Hold",
-    description: "Electronics Letters 2020 - Pushing boundaries of data acquisition. Co-authored with B. Murmann.",
-    tags: ["Electronics Letters 2020", "Data Acquisition", "Time-Interleaved"],
+    title: "An up to 36Gbps Analog Baseband Equalizer and Demodulator for mm-Wave Wireless Communication in 28nm CMOS",
+    description: "IEEE CICC 2017 - Full custom mixed-signal baseband architecture and silicon for 60 GHz mmWave receivers.",
+    tags: ["IEEE CICC 2017", "28nm CMOS", "mmWave"],
     type: "publication",
     featured: true,
     links: [
       {
         label: "DOI",
-        href: "https://doi.org/10.1049/el.2019.4104",
+        href: "https://doi.org/10.1109/CICC.2017.7993666",
       },
     ],
   },

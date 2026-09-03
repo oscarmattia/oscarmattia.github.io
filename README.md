@@ -1,6 +1,6 @@
 # oscarmattia.github.io
 
-Personal portfolio site for Oscar Mattia, PhD — engineering leader and AMS architect. The site presents bio, publications, patents, open-source work, a photo gallery, and a technical blog.
+Personal portfolio site for Oscar Mattia, PhD — AMS silicon design, architecture & algorithms. The site presents bio, publications, patents, open-source work, a photo gallery, and a technical blog.
 
 **Live site:** [https://oscarmattia.github.io](https://oscarmattia.github.io)
 

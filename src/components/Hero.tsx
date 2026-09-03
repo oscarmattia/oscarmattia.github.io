@@ -12,12 +12,12 @@ const Hero = () => {
           <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in opacity-0" style={{ animationDelay: "0.2s" }}>
             Oscar Mattia, PhD
           </h1>
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-text-secondary font-medium mb-6 whitespace-nowrap animate-fade-in opacity-0" style={{ animationDelay: "0.3s" }}>
-            Engineering Leader | AMS Architect
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-secondary font-medium mb-6 animate-fade-in opacity-0" style={{ animationDelay: "0.3s" }}>
+            AMS Silicon Design, Architecture & Algorithms
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed max-w-xl mb-10 animate-fade-in opacity-0" style={{ animationDelay: "0.4s" }}>
-            Analog / mixed-signal hardware architect with 11+ years developing high-performance silicon solutions. 
-            Depth and breadth in silicon electronic systems, from high-speed wired, optical and wireless links to next-generation micro-displays.
+            AMS silicon designer, architect and algorithms with 12+ years developing high-performance solutions,
+            from pathfinding to product. Full custom interface silicon for new system applications — across the stack, in high-ambiguity 0–1 scenarios.
           </p>
           <div className="flex gap-4 animate-fade-in opacity-0" style={{ animationDelay: "0.5s" }}>
             <a
